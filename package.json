@@ -1,0 +1,20 @@
+{
+  "name": "wordle",
+  "version": "1.0.0",
+  "description": "A wordle clone",
+  "homepage": "https://github.com/Oggie112/Wordle#readme",
+  "bugs": {
+    "url": "https://github.com/Oggie112/Wordle/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oggie112/Wordle.git"
+  },
+  "license": "ISC",
+  "author": "David Ogden",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  }
+}
