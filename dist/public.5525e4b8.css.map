@@ -1,0 +1,1 @@
+{"mappings":"AAAA","sources":["src/styles/main.css"],"sourcesContent":["input {\r\n    background-color: white;\r\n    transition: all ease 2s;\r\n}"],"names":[],"version":3,"file":"public.5525e4b8.css.map","sourceRoot":"/__parcel_source_root/"}

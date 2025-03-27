@@ -13,8 +13,11 @@
   "license": "ISC",
   "author": "David Ogden",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
-    "test": "start"
+    "test": "start",
+    "build": "tsc --build"
+  },
+  "devDependencies": {
+    "parcel": "^2.14.2"
   }
 }
