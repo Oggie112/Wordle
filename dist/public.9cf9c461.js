@@ -678,8 +678,10 @@ parcelHelpers.export(exports, "initApp", ()=>initApp);
 var _wordCheck = require("./components/wordCheck");
 var _wordsApi = require("./components/wordsApi");
 async function initApp() {
-    let chosen = await (0, _wordsApi.getWords)();
-    document.getElementById("firstWord").addEventListener("submit", async (event)=>await (0, _wordCheck.wordTester)(event, chosen));
+    let dataObj = await (0, _wordsApi.getWords)();
+    let words = dataObj?.words;
+    let chosen = dataObj?.chosen;
+    document.getElementById("firstWord").addEventListener("submit", async (event)=>await (0, _wordCheck.wordTester)(event, chosen, words));
 }
 
 },{"./components/wordCheck":"1ad6t","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./components/wordsApi":"d2Rum"}],"1ad6t":[function(require,module,exports,__globalThis) {
@@ -687,7 +689,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "wordTester", ()=>wordTester);
 var _wordInput = require("./wordInput");
-async function wordTester(event, chosen) {
+async function wordTester(event, chosen, words) {
     event.preventDefault();
     try {
         console.log(chosen);
@@ -695,13 +697,14 @@ async function wordTester(event, chosen) {
         let form = event.target;
         let inputs = form.children;
         let word = (0, _wordInput.inputWord)(event);
-        for(let i = 0; i < word.length; i++){
+        if (words?.includes(word)) for(let i = 0; i < word.length; i++){
             if (word[i] === chosen[i]) {
                 inputs[i].setAttribute("letter", "correct");
                 inputs[i].style.background = "green";
             } else if (chosen.includes(word[i])) inputs[i].style.background = "yellow";
             inputs[i].disabled = true;
         }
+        else alert("Word not recognised");
     } catch (error) {
         if (error instanceof Error) console.error("Error: ", error.message);
         return null;
@@ -757,13 +760,16 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getWords", ()=>getWords);
 async function getWords() {
     try {
-        let chosen = await fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then((response)=>response.json()).then((data)=>{
+        let dataObj = await fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then((response)=>response.json()).then((data)=>{
             let words = data.words;
             let length = data.words.length;
-            let word = words[Math.floor(Math.random() * length)];
-            return word;
+            let chosen = words[Math.floor(Math.random() * length)];
+            return {
+                words,
+                chosen
+            };
         });
-        return chosen;
+        return dataObj;
     } catch (error) {
         if (error instanceof Error) console.error("Error: ", error.message);
         return null;
