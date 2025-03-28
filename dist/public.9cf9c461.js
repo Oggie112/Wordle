@@ -677,30 +677,41 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initApp", ()=>initApp);
 var _wordCheck = require("./components/wordCheck");
 var _wordsApi = require("./components/wordsApi");
+var _buildHtml = require("./components/buildHtml");
 async function initApp() {
-    let chosen = await (0, _wordsApi.getWords)();
-    document.getElementById("firstWord").addEventListener("submit", async (event)=>await (0, _wordCheck.wordTester)(event, chosen));
+    (0, _buildHtml.buildHtml)();
+    let dataObj = await (0, _wordsApi.getWords)();
+    let words = dataObj?.words;
+    let chosen = dataObj?.chosen;
+    document.getElementById("form-0").addEventListener("submit", async (event)=>await (0, _wordCheck.wordTester)(event, chosen, words));
 }
 
-},{"./components/wordCheck":"1ad6t","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./components/wordsApi":"d2Rum"}],"1ad6t":[function(require,module,exports,__globalThis) {
+},{"./components/wordCheck":"1ad6t","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./components/wordsApi":"d2Rum","./components/buildHtml":"kYT9C"}],"1ad6t":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "wordTester", ()=>wordTester);
 var _wordInput = require("./wordInput");
-async function wordTester(event, chosen) {
-    event.preventDefault();
+async function wordTester(event, chosen, words) {
     try {
-        console.log(chosen);
-        if (!chosen) return console.log("Error: WordApi failed");
+        event.preventDefault();
         let form = event.target;
         let inputs = form.children;
-        let word = (0, _wordInput.inputWord)(event);
-        for(let i = 0; i < word.length; i++){
-            if (word[i] === chosen[i]) {
-                inputs[i].setAttribute("letter", "correct");
-                inputs[i].style.background = "green";
-            } else if (chosen.includes(word[i])) inputs[i].style.background = "yellow";
-            inputs[i].disabled = true;
+        let word = await (0, _wordInput.inputWord)(event);
+        console.log(chosen);
+        console.log(word);
+        if (word?.length < 5) {
+            console.log(word);
+            alert("Word must be 5 letters long");
+        } else if (!chosen) return console.log("Error: WordApi failed");
+        else {
+            if (words?.includes(word)) for(let i = 0; i < word.length; i++){
+                if (word[i] === chosen[i]) {
+                    inputs[i].setAttribute("letter", "correct");
+                    inputs[i].style.background = "green";
+                } else if (chosen.includes(word[i])) inputs[i].style.background = "yellow";
+                inputs[i].disabled = true;
+            }
+            else alert("Word not recognised");
         }
     } catch (error) {
         if (error instanceof Error) console.error("Error: ", error.message);
@@ -708,20 +719,7 @@ async function wordTester(event, chosen) {
     }
 }
 
-},{"./wordInput":"hB2Z8","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"hB2Z8":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "inputWord", ()=>inputWord);
-function inputWord(event) {
-    event.preventDefault();
-    let form = event.target;
-    let formData = new FormData(form);
-    let inputWord = "";
-    for (var [key, value] of formData.entries())inputWord += value;
-    return inputWord;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./wordInput":"hB2Z8"}],"jnFvT":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -751,23 +749,91 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"d2Rum":[function(require,module,exports,__globalThis) {
+},{}],"hB2Z8":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "inputWord", ()=>inputWord);
+function inputWord(event) {
+    event.preventDefault();
+    let form = event.target;
+    let formData = new FormData(form);
+    console.log(formData);
+    let inputWord = "";
+    for (var [key, value] of formData.entries())inputWord += value;
+    return inputWord;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"d2Rum":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getWords", ()=>getWords);
 async function getWords() {
     try {
-        let chosen = await fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then((response)=>response.json()).then((data)=>{
+        let dataObj = await fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then((response)=>response.json()).then((data)=>{
             let words = data.words;
             let length = data.words.length;
-            let word = words[Math.floor(Math.random() * length)];
-            return word;
+            let chosen = words[Math.floor(Math.random() * length)];
+            return {
+                words,
+                chosen
+            };
         });
-        return chosen;
+        return dataObj;
     } catch (error) {
         if (error instanceof Error) console.error("Error: ", error.message);
         return null;
     }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"kYT9C":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "buildHtml", ()=>buildHtml);
+function buildHtml() {
+    buildInput();
+    buildAlpha();
+}
+function buildInput() {
+    let wordContainer = document.getElementById("word-container");
+    // create 6 elements with 5 inputs each - 6 goes at 5 letter word
+    for(let i = 0; i < 6; i++){
+        let form = document.createElement("form");
+        form?.setAttribute("id", `form-${i}`);
+        for(let i = 0; i < 6; i++){
+            let input = document.createElement("input");
+            if (i < 5) {
+                input?.setAttribute("id", `input-${i}`);
+                input.name = `letter-${i}`;
+            } else {
+                input?.setAttribute("id", "submitter");
+                input.type = "submit";
+            //input.style.visibility = "hidden";
+            }
+            form?.appendChild(input);
+        }
+        wordContainer?.appendChild(form);
+    }
+}
+function buildAlpha() {
+    let alphaContainer = document.getElementById("alpha-container");
+    // create clickable keyboard
+    let abc = [
+        "qwertyuiop",
+        "asdfghjkl",
+        "zxcvbnm"
+    ];
+    abc.map((x, i)=>{
+        let row = document.createElement("div");
+        row.setAttribute("id", `row-${i}`);
+        for(let i = 0; i < x.length; i++){
+            let letter = document.createElement("div");
+            letter.setAttribute("id", x[i]);
+            letter.setAttribute("value", x[i]);
+            letter.innerText = x[i];
+            row?.appendChild(letter);
+        }
+        alphaContainer?.appendChild(row);
+    });
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["hMuUo","ahnQa"], "ahnQa", "parcelRequire5444")

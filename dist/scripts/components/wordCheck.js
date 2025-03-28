@@ -8,29 +8,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { inputWord } from "./wordInput";
-import { getWords } from "./wordsApi";
-export function wordTester(event) {
+export function wordTester(event, chosen, words) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let chosen = yield getWords();
-            console.log(chosen);
-            if (!chosen) {
-                return console.log("Error: WordApi failed");
-            }
-            ;
             event.preventDefault();
             let form = event.target;
             let inputs = form.children;
             let word = inputWord(event);
-            for (let i = 0; i < word.length; i++) {
-                if (word[i] === chosen[i]) {
-                    inputs[i].setAttribute("letter", "correct");
-                    inputs[i].style.background = "green";
+            console.log(chosen);
+            if (!chosen) {
+                return console.log("Error: WordApi failed");
+            }
+            else if (word.length < 5) {
+                return null;
+            }
+            if (words === null || words === void 0 ? void 0 : words.includes(word)) {
+                for (let i = 0; i < word.length; i++) {
+                    if (word[i] === chosen[i]) {
+                        inputs[i].setAttribute("letter", "correct");
+                        inputs[i].style.background = "green";
+                    }
+                    else if (chosen.includes(word[i])) {
+                        inputs[i].style.background = "yellow";
+                    }
+                    inputs[i].disabled = true;
                 }
-                else if (chosen.includes(word[i])) {
-                    inputs[i].style.background = "yellow";
-                }
-                inputs[i].disabled = true;
+                ;
+            }
+            else {
+                alert("Word not recognised");
             }
         }
         catch (error) {

@@ -10,13 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 export function getWords() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let chosen = yield fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then(response => response.json()).then(data => {
+            let dataObj = yield fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then(response => response.json()).then(data => {
                 let words = data.words;
                 let length = data.words.length;
-                let word = words[Math.floor(Math.random() * length)];
-                return word;
+                let chosen = words[Math.floor(Math.random() * length)];
+                return {
+                    words,
+                    chosen
+                };
             });
-            return "reach";
+            return dataObj;
         }
         catch (error) {
             if (error instanceof Error) {
