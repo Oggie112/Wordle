@@ -7,11 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// import { initApp } from "./index";
-import { wordTester } from "./components/wordCheck";
+import { initApp } from "./index";
 window.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("this bits running");
-    document.getElementById("firstWord").addEventListener("submit", yield wordTester);
+    initApp();
 }));
 // onchange for input to auto focus next;
 // colour change function

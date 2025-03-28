@@ -1,1 +1,1 @@
-{"root":["./src/scripts/index.ts","./src/scripts/main.ts","./src/scripts/components/wordcheck.ts","./src/scripts/components/wordinput.ts","./src/scripts/components/wordsapi.ts"],"version":"5.8.2"}
+{"root":["./src/scripts/index.ts","./src/scripts/main.ts","./src/scripts/components/buildhtml.ts","./src/scripts/components/wordcheck.ts","./src/scripts/components/wordinput.ts","./src/scripts/components/wordsapi.ts"],"version":"5.8.2"}
