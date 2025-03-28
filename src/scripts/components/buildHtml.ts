@@ -1,3 +1,5 @@
+import { moveFocus } from "./moveFocus";
+
 export function buildHtml() {
 
     buildInput();
@@ -14,23 +16,37 @@ function buildInput() {
         let form = document.createElement("form");
         form?.setAttribute("id", `form-${i}`);
 
-        for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 6; j++) {
             let input = document.createElement("input");
 
-            if (i < 5) {
+            if (j < 5) {
 
-                input?.setAttribute("id", `input-${i}`);
-                input.name = `letter-${i}`
+                input?.setAttribute("id", `input-${j}`);
+
+                input.name = `letter-${j}`;
+
+                input.type = "text"
+
+                input.maxLength = 1;
+
+                input.addEventListener("input", (event) => moveFocus(event, form, j, "next"))
+
+                input.addEventListener("keydown", (event) => moveFocus(event, form, j, "prev"))
 
             } else {
 
                 input?.setAttribute("id", "submitter");
+
                 input.type = "submit";
-                //input.style.visibility = "hidden";
+
+                input.style.visibility = "hidden";
                 
             };
 
+            i > 0 ? input.disabled = true : null;
+            
             form?.appendChild(input);
+
         };
 
     wordContainer?.appendChild(form);
