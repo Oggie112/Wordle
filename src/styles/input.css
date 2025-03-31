@@ -1,4 +1,7 @@
+@import "tailwindcss";
+
 input {
     background-color: white;
     transition: all ease 2s;
+    border: black solid 2px;
 }

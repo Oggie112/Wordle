@@ -15,9 +15,13 @@
   "type": "commonjs",
   "scripts": {
     "test": "start",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "tailwind": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css"
   },
   "devDependencies": {
-    "parcel": "^2.14.2"
+    "@tailwindcss/cli": "^4.0.17",
+    "autoprefixer": "^10.4.21",
+    "parcel": "^2.14.2",
+    "postcss": "^8.5.3"
   }
 }
