@@ -1,7 +1,17 @@
 @import "tailwindcss";
 
-input {
-    background-color: white;
-    transition: all ease 2s;
-    border: black solid 2px;
+.inputs {
+    @apply bg-white rounded-2xl text-center transition duration-500 ease-in size-8 sm:size-12 md:size-16 lg:size-20 md:text-3xl
+}
+
+.forms {
+    @apply flex flex-row gap-2 w-full h-12 sm:h-16 md:h-20 lg:h-24  justify-evenly items-center
+}
+
+.alpha-row {
+    @apply flex flex-row w-full h-8 sm:h-8 md:h-12 lg:h-16 justify-center items-center
+}
+
+.letters {
+    @apply bg-white flex justify-center items-center rounded-2xl text-center size-8 sm:size-8 md:size-12 lg:size-16 md:text-3xl
 }

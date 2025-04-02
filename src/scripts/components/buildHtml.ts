@@ -15,10 +15,11 @@ function buildInput() {
 
         let form = document.createElement("form");
         form?.setAttribute("id", `form-${i}`);
+        form.classList.add("forms");
 
         for (let j = 0; j < 6; j++) {
             let input = document.createElement("input");
-
+            input.classList.add("inputs")
             if (j < 5) {
 
                 input?.setAttribute("id", `input-${j}`);
@@ -40,6 +41,8 @@ function buildInput() {
                 input.type = "submit";
 
                 input.style.visibility = "hidden";
+
+                input.style.position = "absolute"
                 
             };
 
@@ -62,13 +65,16 @@ function buildAlpha() {
     abc.map((x, i) => {
 
         let row = document.createElement("div");
+        row.classList.add("alpha-row")
         row.setAttribute("id", `row-${i}`);
 
         for (let i = 0; i < x.length; i++) {
             let letter = document.createElement("div");
             letter.setAttribute("id", x[i]);
             letter.setAttribute("value", x[i]);
+            letter.setAttribute("blocked", "false")
             letter.innerText = x[i];
+            letter.classList.add("letters")
             row?.appendChild(letter); 
         }
         alphaContainer?.appendChild(row);
