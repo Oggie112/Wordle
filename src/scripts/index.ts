@@ -16,5 +16,17 @@ export async function initApp() {
 
     x!.addEventListener("submit", async (event) => await wordTester(event, chosen, words));
 
+    let inputs = document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>
+    inputs.forEach((input) => {
+        input.addEventListener("keydown", (event: KeyboardEvent) => {
+            let key = event.key;
+            let blocked = document.getElementById(key)?.getAttribute("blocked")
+            if (blocked === "true") {
+                event.preventDefault()
+            }
+        })
+
+    })
+
     })
 }

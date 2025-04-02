@@ -6,15 +6,16 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
 
     event.preventDefault(); 
 
-    let form = event.target as HTMLFormElement; 
+    let form = event?.target as HTMLFormElement; 
 
-    let inputs = form.children as HTMLCollectionOf<HTMLInputElement>;
+    let inputs = form?.children as HTMLCollectionOf<HTMLInputElement>;
 
-    let nextForm = form.nextSibling as HTMLFormElement;
+    let nextForm = form?.nextSibling as HTMLFormElement;
 
-    let nextInputs = nextForm.children as HTMLCollectionOf<HTMLInputElement>
 
-    console.log(nextInputs)
+    let nextInputs = nextForm?.children as HTMLCollectionOf<HTMLInputElement>
+
+    console.log("afterinputs")
 
     let word = await inputWord(event);
 
@@ -30,16 +31,31 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
     } else {
  
         if (words?.includes(word)) {
+
             for (let i = 0; i < 6; i++) {
+
                 if (word[i] === chosen[i] && i < words.length) {
+
                     inputs[i].setAttribute("letter", "correct")
                     inputs[i].style.background = "green";
+
                 } else if (chosen.includes(word[i]) && i < words.length) {
-                    inputs[i].style.background = "yellow"
+
+                    inputs[i].style.background = "yellow";
+
+                } else {
+
+                    let letter = document.getElementById(word[i]) as HTMLDivElement;
+                    letter.style.background = "grey";
+                    letter.setAttribute("blocked", "true");
+
                 }
+
                 inputs[i].disabled = true;
-                nextInputs[i].disabled = false
+                nextInputs ? nextInputs[i].disabled = false : null;
+
             };
+
         } else {
             alert("Word not recognised");
         };
