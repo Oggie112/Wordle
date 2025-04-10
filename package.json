@@ -16,7 +16,8 @@
   "scripts": {
     "test": "start",
     "build": "tsc --build",
-    "tailwind": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css"
+    "tailwind": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css",
+    "dev": "parcel public/index.html" 
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.17",
