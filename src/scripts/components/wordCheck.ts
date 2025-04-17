@@ -1,4 +1,5 @@
 import { inputWord } from "./wordInput";
+import { endGame } from "./endGame";
 
 export async function wordTester(event: SubmitEvent, chosen: string | undefined, words: string[] | undefined) {
     
@@ -15,22 +16,26 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
 
     let nextInputs = nextForm?.children as HTMLCollectionOf<HTMLInputElement>
 
-    console.log("afterinputs")
+    console.log(chosen)
 
     let word = await inputWord(event);
 
-    console.log(chosen);
-    console.log(word)
-
     if (word?.length < 5) {
-        console.log(word)
+
         alert("Word must be 5 letters long");
         
     } else if (!chosen) {
+
         return console.log("Error: WordApi failed");
+
     } else {
- 
-        if (words?.includes(word)) {
+
+        if (chosen === word) {
+
+            console.log("winner")
+            endGame(inputs, "Well Done!", chosen);
+
+        } else if (words?.includes(word)) {
 
             for (let i = 0; i < 6; i++) {
 

@@ -1,24 +1,24 @@
 import { moveFocus } from "./moveFocus";
 
-export function buildHtml() {
+export function buildHtml(): void {
 
     buildInput();
 
     buildAlpha();
 };
 
-function buildInput() {
+function buildInput(): void {
     
-    let wordContainer = document.getElementById("word-container");
+    let wordContainer: HTMLElement | null = document.getElementById("word-container");
     // create 6 elements with 5 inputs each - 6 goes at 5 letter word
     for (let i = 0; i < 6; i++) {
 
-        let form = document.createElement("form");
+        let form: HTMLFormElement = document.createElement("form");
         form?.setAttribute("id", `form-${i}`);
         form.classList.add("forms");
 
         for (let j = 0; j < 6; j++) {
-            let input = document.createElement("input");
+            let input: HTMLInputElement = document.createElement("input");
             input.classList.add("inputs")
             if (j < 5) {
 
@@ -56,8 +56,8 @@ function buildInput() {
     };
 };
 
-function buildAlpha() {
-    let alphaContainer = document.getElementById("alpha-container") 
+function buildAlpha(): void {
+    let alphaContainer: HTMLElement | null = document.getElementById("alpha-container") 
 
     // create clickable keyboard
     let abc: string[] = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
