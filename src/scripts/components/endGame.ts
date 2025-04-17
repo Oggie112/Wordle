@@ -1,4 +1,6 @@
-export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>) {
+import { popUp } from "./popUp";
+
+export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: string, chosen: string): void {
     for (let i = 0; i < 6; i++) {
 
         inputs[i].setAttribute("letter", "correct")
@@ -17,4 +19,5 @@ export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>) {
 
           }, delay + 1000);
     };
+    popUp(message, chosen)
 }

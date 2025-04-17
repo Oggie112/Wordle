@@ -33,7 +33,7 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
         if (chosen === word) {
 
             console.log("winner")
-            endGame(inputs);
+            endGame(inputs, "Well Done!", chosen);
 
         } else if (words?.includes(word)) {
 

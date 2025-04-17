@@ -1,6 +1,6 @@
-export function moveFocus(event: Event | KeyboardEvent, form: HTMLFormElement, index: number, direction: "next" | "prev") {
+export function moveFocus(event: Event | KeyboardEvent, form: HTMLFormElement, index: number, direction: "next" | "prev"): void {
 
-    const inputs = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="text"]'));
+    const inputs: HTMLInputElement[] = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="text"]'));
     
     if (direction === "next" && (event as InputEvent).inputType !== "deleteContentBackward") {
         if (inputs[index].value.length === 1 && index < inputs.length - 1) {
