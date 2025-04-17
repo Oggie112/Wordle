@@ -4,12 +4,14 @@ export function popUp(message: string, chosen: string): void {
 
     let title: HTMLHeadingElement = document.createElement("h1");
     title.textContent = message;
+    title.classList.add("text-5xl") 
 
     let word: HTMLHeadingElement = document.createElement("h2");
     word.textContent = `The word is ${chosen}`;
+    word.classList.add("text-3xl");
 
     let description: HTMLParagraphElement = document.createElement("p");
-    description.textContent = "This is just a placeholder for now. Lalalalalalalallalalallalalallalaallalalaal"
+    description.textContent = "This is just a placeholder for now. I want to make an api call to a dictionary to get a description. Lalalalalalalallalalallalalallalaallalalaal"
 
     let buttonHolder: HTMLDivElement = document.createElement("div");
 
@@ -26,9 +28,10 @@ export function popUp(message: string, chosen: string): void {
     popUp.appendChild(word);
     popUp.appendChild(description);
     popUp.appendChild(buttonHolder);
+    popUp.classList.add("pop-up")
 
     container?.appendChild(popUp)
-
+    
 }
 
 /*

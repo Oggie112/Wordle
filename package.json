@@ -17,10 +17,11 @@
     "test": "start",
     "build": "tsc --build",
     "tailwind": "npx @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css",
-    "dev": "parcel public/index.html" 
+    "dev": "parcel public/index.html"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.17",
+    "@tailwindcss/postcss": "^4.1.4",
     "autoprefixer": "^10.4.21",
     "parcel": "^2.14.2",
     "postcss": "^8.5.3"

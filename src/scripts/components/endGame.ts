@@ -13,11 +13,15 @@ export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: st
 
         inputs[i].classList.add("animate-bounce-once");
 
+        inputs[i].disabled = true;
+
         setTimeout(() => {
 
             inputs[i].classList.remove("animate-bounce-once");
 
           }, delay + 1000);
     };
-    popUp(message, chosen)
+    setTimeout(() => {
+        popUp(message, chosen)
+    }, 5000)
 }
