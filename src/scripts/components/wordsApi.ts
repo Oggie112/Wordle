@@ -1,28 +1,32 @@
-
 interface RetrievedWords {
     words: string[],
-    chosen: string
+    chosen: string,
+    definition: string
 }
 
 export async function getWords(): Promise<RetrievedWords | null> {
     try {
-        let dataObj: RetrievedWords = await fetch("https://cheaderthecoder.github.io/5-Letter-words/words.json").then(response => response.json()).then(data => {
+
+        const wordText = await fetch('https://raw.githubusercontent.com/dariusk/corpora/refs/heads/master/data/words/word_clues/clues_five.json').then(res => res.json());
         
-        let words: string[] = data.words;
+        const words: string[] = Object.keys(wordText.data);
 
-        let length: number = data.words.length;
+        const length: number = words.length;
 
-        let chosen: string = words[Math.floor(Math.random() * length)];
+        const chosen: string = words[Math.floor(Math.random() * length)];
 
+         const dictionary = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${chosen}`).then(res => res.json());
+         
+         const definition = dictionary[0].meanings[0].definitions[0].definition || "No definition found";
+
+         console.log(chosen);
         return {
             words,
-            chosen
+            chosen,
+            definition
         }
-        });
-
-        return dataObj
-
-    } catch (error: unknown) {
+        }
+        catch (error: unknown) {
 
         if (error instanceof Error) {
             console.error("Error: ", error.message)

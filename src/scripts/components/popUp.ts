@@ -1,24 +1,25 @@
-export function popUp(message: string, chosen: string): void {
-    let container: HTMLElement | null = document.getElementById("main-container");
-    let popUp: HTMLElement = document.createElement("div");
+export function popUp(message: string, chosen: string, definition: string): void {
+    const container: HTMLElement | null = document.getElementById("main-container");
+    
+    const popUp: HTMLElement = document.createElement("div");
 
-    let title: HTMLHeadingElement = document.createElement("h1");
+    const title: HTMLHeadingElement = document.createElement("h1");
     title.textContent = message;
     title.classList.add("text-5xl") 
 
-    let word: HTMLHeadingElement = document.createElement("h2");
+    const word: HTMLHeadingElement = document.createElement("h2");
     word.textContent = `The word is ${chosen}`;
     word.classList.add("text-3xl");
 
-    let description: HTMLParagraphElement = document.createElement("p");
-    description.textContent = "This is just a placeholder for now. I want to make an api call to a dictionary to get a description. Lalalalalalalallalalallalalallalaallalalaal"
+    const description: HTMLParagraphElement = document.createElement("p");
+    description.textContent = `Definition: ${definition}`;
 
-    let buttonHolder: HTMLDivElement = document.createElement("div");
+    const buttonHolder: HTMLDivElement = document.createElement("div");
 
-    let replay: HTMLButtonElement = document.createElement("button");
+    const replay: HTMLButtonElement = document.createElement("button");
     replay.innerText = "Play again?";
 
-    let stats: HTMLButtonElement = document.createElement("button");
+    const stats: HTMLButtonElement = document.createElement("button");
     stats.textContent = "See your stats";
 
     buttonHolder.appendChild(replay);
@@ -31,10 +32,18 @@ export function popUp(message: string, chosen: string): void {
     popUp.classList.add("pop-up")
 
     container?.appendChild(popUp)
+
+       /* container!.onclick = () => {
+        popUp.style.display = "none";
+    };
+    */
+
+    replay.onclick = () => window.location.reload();
     
 }
 
 /*
-Create pop of a resonsive size. Title message - Win / lose. The Word as a title. Dictionary api underneath. 
-Stats and play again button underneath
+popup text to be responsive, style button holder and buttons themselves.
+Stats - localStorage. Played, won, current streak, max streak, which level guessed % .
+Better handler for wrong word - shake form, red border?
 */

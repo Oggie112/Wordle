@@ -1,7 +1,8 @@
 import { popUp } from "./popUp";
 
-export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: string, chosen: string): void {
-    for (let i = 0; i < 6; i++) {
+export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: string, chosen: string, definition: string, success: boolean): void {
+    if (success) {
+            for (let i = 0; i < 6; i++) {
 
         inputs[i].setAttribute("letter", "correct")
 
@@ -22,6 +23,11 @@ export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: st
           }, delay + 1000);
     };
     setTimeout(() => {
-        popUp(message, chosen)
+        popUp(message, chosen, definition)
     }, 5000)
+    }
+    else {
+        popUp(message, chosen, definition);
+    }
+
 }

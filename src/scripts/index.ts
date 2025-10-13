@@ -4,23 +4,31 @@ import { buildHtml } from "./components/buildHtml";
 
 export async function initApp() {
     buildHtml();
-    let dataObj = await getWords();
-    let words: string[] | undefined = dataObj?.words;
-    let chosen: string | undefined = dataObj?.chosen;
-    
-    let wordsContainer = document.getElementById("word-container");
+    window.onload = async () => {
+        const firstInput = document.getElementById("input-0") as HTMLInputElement;
+        firstInput?.focus();
+    };
+    const dataObj = await getWords();
+    if (!dataObj) {
+        return console.error("Error: Failed to retrieve words");
+    };
+    const words: string[] = dataObj.words;
+    const chosen: string = dataObj.chosen;
+    const definition: string = dataObj.definition;
+    ;
+    const wordsContainer = document.getElementById("word-container");
 
-    let forms = Array.from(wordsContainer?.querySelectorAll<HTMLFormElement>("form") || []);
+    const forms = Array.from(wordsContainer?.querySelectorAll<HTMLFormElement>("form") || []);
     
     forms.map((x) => {
 
-    x!.addEventListener("submit", async (event) => await wordTester(event, chosen, words));
+    x!.addEventListener("submit", async (event) => await wordTester(event, chosen, words, definition));
 
-    let inputs = document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>
+    const inputs = document.querySelectorAll("input[type=text]") as NodeListOf<HTMLInputElement>
     inputs.forEach((input) => {
         input.addEventListener("keydown", (event: KeyboardEvent) => {
-            let key = event.key;
-            let blocked = document.getElementById(key)?.getAttribute("blocked")
+            const key = event.key;
+            const blocked = document.getElementById(key)?.getAttribute("blocked")
             if (blocked === "true") {
                 event.preventDefault()
             }

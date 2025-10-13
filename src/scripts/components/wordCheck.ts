@@ -1,24 +1,24 @@
 import { inputWord } from "./wordInput";
 import { endGame } from "./endGame";
 
-export async function wordTester(event: SubmitEvent, chosen: string | undefined, words: string[] | undefined) {
+export async function wordTester(event: SubmitEvent, chosen: string, words: string[], definition: string) {
     
     try {
 
     event.preventDefault(); 
 
-    let form = event?.target as HTMLFormElement; 
+    const form = event?.target as HTMLFormElement; 
 
-    let inputs = form?.children as HTMLCollectionOf<HTMLInputElement>;
+    const inputs = form?.children as HTMLCollectionOf<HTMLInputElement>;
 
-    let nextForm = form?.nextSibling as HTMLFormElement;
+    const nextForm = form?.nextSibling as HTMLFormElement;
 
 
-    let nextInputs = nextForm?.children as HTMLCollectionOf<HTMLInputElement>
+    const nextInputs = nextForm?.children as HTMLCollectionOf<HTMLInputElement>
 
     console.log(chosen)
 
-    let word = await inputWord(event);
+    const word = await inputWord(event);
 
     if (word?.length < 5) {
 
@@ -33,7 +33,7 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
         if (chosen === word) {
 
             console.log("winner")
-            endGame(inputs, "Well Done!", chosen);
+            endGame(inputs, "Well Done!", chosen, definition, true);
 
         } else if (words?.includes(word)) {
 
@@ -48,17 +48,20 @@ export async function wordTester(event: SubmitEvent, chosen: string | undefined,
 
                     inputs[i].style.background = "yellow";
 
+                } else if (!nextForm) {
+                    endGame(inputs, `Unlucky!`, chosen, definition, false);
                 } else {
 
-                    let letter = document.getElementById(word[i]) as HTMLDivElement;
+                    const letter = document.getElementById(word[i]) as HTMLDivElement;
+                    inputs[i].style.background = "grey"
                     letter.style.background = "grey";
-                    letter.setAttribute("blocked", "true");
+                    // letter.setAttribute("blocked", "true");
 
                 }
 
                 inputs[i].disabled = true;
                 nextInputs ? nextInputs[i].disabled = false : null;
-
+                nextInputs ? nextInputs[0].focus() : null;
             };
 
         } else {

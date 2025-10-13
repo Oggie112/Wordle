@@ -9,16 +9,16 @@ export function buildHtml(): void {
 
 function buildInput(): void {
     
-    let wordContainer: HTMLElement | null = document.getElementById("word-container");
+    const wordContainer: HTMLElement | null = document.getElementById("word-container");
     // create 6 elements with 5 inputs each - 6 goes at 5 letter word
     for (let i = 0; i < 6; i++) {
 
-        let form: HTMLFormElement = document.createElement("form");
+        const form: HTMLFormElement = document.createElement("form");
         form?.setAttribute("id", `form-${i}`);
         form.classList.add("forms");
 
         for (let j = 0; j < 6; j++) {
-            let input: HTMLInputElement = document.createElement("input");
+            const input: HTMLInputElement = document.createElement("input");
             input.classList.add("inputs")
             if (j < 5) {
 
@@ -57,19 +57,19 @@ function buildInput(): void {
 };
 
 function buildAlpha(): void {
-    let alphaContainer: HTMLElement | null = document.getElementById("alpha-container") 
+    const alphaContainer: HTMLElement | null = document.getElementById("alpha-container") 
 
     // create clickable keyboard
-    let abc: string[] = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+    const abc: string[] = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
     abc.map((x, i) => {
 
-        let row = document.createElement("div");
+        const row = document.createElement("div");
         row.classList.add("alpha-row")
         row.setAttribute("id", `row-${i}`);
 
         for (let i = 0; i < x.length; i++) {
-            let letter = document.createElement("div");
+            const letter = document.createElement("div");
             letter.setAttribute("id", x[i]);
             letter.setAttribute("value", x[i]);
             letter.setAttribute("blocked", "false")
