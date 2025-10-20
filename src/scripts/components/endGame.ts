@@ -1,33 +1,38 @@
-import { popUp } from "./popUp";
 
-export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: string, chosen: string, definition: string, success: boolean): void {
+import { showModal } from "./modal";
+import { updateStats } from "./statStorage";
+
+export function endGame (inputs: HTMLCollectionOf<HTMLInputElement>, message: string, chosen: string, definition: string, success: boolean, attempt: number): void {
     if (success) {
-            for (let i = 0; i < 6; i++) {
-
-        inputs[i].setAttribute("letter", "correct")
-
-        inputs[i].style.background = "green";
-
-        let delay: number = i * 1000;
-
-        inputs[i].style.animationDelay = `${delay}ms`;
-
-        inputs[i].classList.add("animate-bounce-once");
-
-        inputs[i].disabled = true;
-
+        for (let i = 0; i < 6; i++) {
+            inputs[i].setAttribute("letter", "correct")
+            inputs[i].style.background = "green";
+            let delay: number = i * 1000;
+            inputs[i].style.animationDelay = `${delay}ms`;
+            inputs[i].classList.add("animate-bounce-once");
+            inputs[i].disabled = true;
+            setTimeout(() => {
+                inputs[i].classList.remove("animate-bounce-once");
+            }, delay + 1000);
+        };
         setTimeout(() => {
-
-            inputs[i].classList.remove("animate-bounce-once");
-
-          }, delay + 1000);
-    };
-    setTimeout(() => {
-        popUp(message, chosen, definition)
-    }, 5000)
+            populateEndGameModal(message, chosen, definition);
+            showModal('end-game-modal');
+            updateStats(true, attempt);
+        }, 5000);
+    } else {
+        populateEndGameModal(message, chosen, definition);
+        showModal('end-game-modal');
+        updateStats(false, attempt);
     }
-    else {
-        popUp(message, chosen, definition);
-    }
+}
 
+function populateEndGameModal(message: string, chosen: string, definition: string): void {
+    const messageEl = document.getElementById('end-game-message');
+    const wordEl = document.getElementById('end-game-word');
+    const definitionEl = document.getElementById('end-game-definition');
+
+    if (messageEl) messageEl.textContent = message;
+    if (wordEl) wordEl.textContent = `The word is ${chosen}`;
+    if (definitionEl) definitionEl.textContent = `Definition: ${definition}`;
 }
